@@ -1,0 +1,17 @@
+<!--ベーステンプレートを適用する-->
+{% extends 'base.html' %}
+<!--仮のために、staticをロードする-->
+{% load static %}
+<!--ヘッダー情報のページタイトルを設定する-->
+{% block title %}効果測定{% endblock %}
+    <!--実際は、アプリケーションの呼び出しを行う-->
+    <!--仮に、コンテンツを入れておく-->
+    {% block contents %}
+    <!-- 投稿一覧テンプレートの組み込み -->
+    {% include "cap_list.html" %}
+    <!-- ページネーションの組み込み-->
+    {% include "pagination.html" %}
+    
+     {% endblock %}
+
+    

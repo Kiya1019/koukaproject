@@ -1,0 +1,44 @@
+<!-- ベーステンプレートを適用する-->
+{% extends 'base.html' %}
+<!-- ヘッダー情報のページタイトルを設定する-->
+{% block title %}Koouka Detail{% endblock %}
+
+      {% block contents %}
+      <!-- Bootstrapのグリッドシステム-->
+      <br>
+      <div class="container">
+        <!-- 行を配置 -->
+        <div class="row">
+          <!-- 列の左右に余白offset-3を入れる-->
+          <div class="col offset-3">
+            <!-- 名前 -->
+            <h2>{{object.title}}</h2>
+            <!-- 学年・クラス -->
+            <p>{{object.num}}</p>
+            <!-- 英語点数 -->
+            <p>英語：{{object.score1}}</p>
+            <!-- 数学点数 -->
+            <p>数学：{{object.score2}}</p>
+            <!-- 国語点数 -->
+            <p>国語：{{object.score3}}</p>
+            <!-- 理科点数 -->
+            <p>理科：{{object.score4}}</p>
+            <!-- 社会点数 -->
+            <p>社会：{{object.score5}}</p>
+            <br>
+            <!-- 投稿日時 -->
+            <p>{{object.posted_at}}に投稿</p>
+            
+             <!-- 投稿写真がログイン中のユーザーのものであれば削除ボタンを表示-->
+             {% if request.user == object.user %}
+             <form method="POST">
+             <!-- リンク先のURL
+                  photo/<Photo postsテーブルのid値>/delete/-->
+             <a href="{% url 'captureapp:captureapp_delete' object.pk %}"
+                class="btn btn-primary my-2">削除する</a>
+             {% endif %}
+            
+          </dv>
+        </dv>
+      </dv>
+      {% endblock %}

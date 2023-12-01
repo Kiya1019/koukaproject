@@ -1,0 +1,100 @@
+<!-- ベーステンプレートを適用する　-->
+{% extends 'base.html' %}
+<!--
+静的ファイルのURLを生成するstaticは
+個々のページで読み込む事が必要
+-->
+{% load static %}
+<!-- ヘッダー情報のページタイトルは
+ベーステンプレートを利用するページで設定する
+-->
+{% block title %}お問い合わせ{% endblock %}
+
+        <!-- Page Header-->
+        <!-- ページヘッダーはベーステンプレートを利用するページで設定する-->
+        {% block header %}
+        <!-- ヘッダーの背景イメージのリンク先url()の引数にstaticタグに書き換え　-->
+        <header class="masthead" 
+                style="background-image: url({% static 'assets/img/contact-bg.jpg' %})">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="page-heading">
+                            <!--ヘッダーの見出しを変更-->
+                            <h1>Contact Me</h1>
+                            <!-- サブタイトルを変更　-->
+                            <span class="subheading">Have questions? I have answers.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        {% endblock %}
+
+        <!-- Main Content-->
+        <!-- ページのコンテンツはベーステンプレートを使用するぺ時で設定する　-->
+        {% block contents %}
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <!--本文を変更-->
+                        <strong>連絡を取りたいですか？
+                                以下のフォームに記入してメッセージを送信してください。
+                                できるだけ早くご連絡します。</strong>
+
+                        <!-- フォームの送信が成功したときのメッセージを表示するためのコード　-->
+                        <!--　requestにmessageオブジェクトが存在している場合　-->
+                        {% if messages %}
+                        <!-- 箇条書きのスタイルを無効にした<ul>タグでメッセージを出力-->
+                        <ul class = "list-unstyled" style="list-style: none;">
+                            <!-- forでmessageを取り出す　-->
+                            {% for message in messages %}
+                            <!-- message.tagsが存在する場合はclass属性にCSSのクラスに設定-->
+                            <li {%if message.tags %} class="{{ message.tags }}" {% endif %}>
+                                <!-- messageに格納されているメッセージを出力　-->
+                                {{ message }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+
+                        <!-- 以下、フォームを表示するためのコード-->
+                        <div class="my-5">
+                            <!-- method="post"を追加　-->
+                            <form method="post">
+                                <!-- CSRF対策の為のテンプレートタグ-->
+                                {% csrf_token %}
+                                <!-- formで定義されているフィールドの値を取り出す-->
+                                {% for field in form %}
+                                  <div class="form-fioating">
+                                    <div class="form-group floating-label-form-group controls">
+                                        <!-- <label>タグを生成-->
+                                        {{ field.label_tag}}
+                                        <!--フィールドの設定値を<input>タグで出力-->
+                                        {{ field }}
+                                        <!-- <P>を追加　-->
+                                        <p class="help-block text-danger"></p>
+                                        <!-- <input>タグを削除　-->
+                                        <!-- <label>~</label>タグを削除　-->
+                                    </div>
+                                </div>
+                            <!-- forループはここまで-->
+                            {% endfor %}
+                            
+                            <br>
+                            <!--送信用のボタン　-->
+                            <button type= "submit"
+                                    class="btn btn-primary"
+                                    id="sendMessageButton">Send</button>       
+                                                     
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+        </main>
+        {% endblock %}
+        <!-- Footer-->
